@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class = "login-button"> 
+    {% if user.is_active %}
+    <form action="{% url 'accounts:logout' %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" class= "btn btn-primary" value= "logout">
+    </form>
+    {% else %}
+    <form action="{% url 'accounts:login' %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" class= "btn btn-primary" value= "login">
+    <form action="{% url 'accounts:signup'%}" method= "POST">
+      {% csrf_token %}
+      <input type="submit" class= "btn btn-primary" value= "signup">
+    </form>
+    {% endif %} 
+  </div>
+
+    <h1>
+        <span>문서 추가</span>
+    </h1>
+
+    <div class="new mx-auto mt-5">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }} 
+            <input type="submit" value="Create">
+        </form>
+    </div>
+{% endblock %}

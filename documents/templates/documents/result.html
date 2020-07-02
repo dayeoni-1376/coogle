@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% load document_extras %}
+
+{% block body %}
+<div class = "login-button"> 
+  {% if user.is_active %}
+  <form action="{% url 'accounts:logout' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" class= "btn btn-primary" value= "logout">
+  </form>
+  {% else %}
+  <form action="{% url 'accounts:login' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" class= "btn btn-primary" value= "login">
+  <form action="{% url 'accounts:signup'%}" method= "POST">
+    {% csrf_token %}
+    <input type="submit" class= "btn btn-primary" value= "signup">
+  </form>
+  {% endif %} 
+</div>
+
+
+  <h1>
+    <span>검색 결과</span>
+  </h1>
+  <!-- Search Form  -->
+    <form action="{% url 'documents:result' %}" method="GET">
+      <div class="mx-auto mt-5 search-bar input-group mb-3">
+        <input name="q" class="form-control rounded-pill" type="text" placeholder="Search..." value="{{ query }}" aria-describedby="basic-addon2">
+        <input type="submit" class="btn btn-outline-primary" value="Search">
+        
+      </div>
+      <div class="mx-auto search-bar input-group mb-3">
+        <a href="{% url 'documents:search' %}">
+          Return to home
+        </a>
+      </div>
+    </form>
+
+
+    <ul>
+        {% for document in documents %}
+ 
+          <div class="mx-auto card" style="width: 40rem;"> 
+            <div class="card-body">
+              <a href="{{ document.markdown.url }}"> {{ document.markdown }} </a>
+              <p>{{ document.markdown_content|highlight:query|safe }}</p>
+            </div>
+          </div>
+
+        {% endfor %}
+    </ul>
+
+
+{% endblock %}
+
+
+

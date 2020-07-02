@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block body %}
+  <div class = "login-button"> 
+    {% if user.is_active %}
+    <form action="{% url 'accounts:logout' %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" class= "btn btn-primary" value= "logout">
+    </form>
+    {% else %}
+    <form action="{% url 'accounts:login' %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" class= "btn btn-primary" value= "login">
+    <form action="{% url 'accounts:signup'%}" method= "POST">
+      {% csrf_token %}
+      <input type="submit" class= "btn btn-primary" value= "signup">
+    </form>
+    {% endif %} 
+  </div>
+
+
+  <h1>
+    <span>C</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
+  </h1>
+
+
+
+  <!-- Search Form  -->
+  <form action="{% url 'documents:result' %}" method="get">
+      <!-- <input name="q" type="text" placeholder="Search..."> -->
+    <div class="mx-auto mt-5 search-bar input-group mb-3">
+      <input type="text" class="form-control rounded-pill" name="q" placeholder="  Coogle 검색" aria-label="Coogle 검색" aria-describedby="basic-addon2">
+      <input type="submit" class = "btn btn-outline-primary" value="Search"> 
+    </div>
+    <div class="mx-auto search-bar input-group mb-3">
+      <a href="{% url 'documents:index' %}">
+        My Documents
+      </a>
+    </div>
+  </form>
+
+
+{% endblock %}
+

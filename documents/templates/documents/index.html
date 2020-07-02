@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class = "login-button"> 
+    {% if user.is_active %}
+    <form action="{% url 'accounts:logout' %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" class= "btn btn-primary" value= "logout">
+    </form>
+    {% else %}
+    <form action="{% url 'accounts:login' %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" class= "btn btn-primary" value= "login">
+    <form action="{% url 'accounts:signup'%}" method= "POST">
+      {% csrf_token %}
+      <input type="submit" class= "btn btn-primary" value= "signup">
+    </form>
+    {% endif %} 
+  </div>
+  
+    <h1>
+        <span>문서 목록</span>
+    </h1>
+
+    
+    <div class="index mx-auto mt-5">
+        <a href="{% url 'documents:search' %}" class="btn btn-primary">Search</a>
+        <a href="{% url 'documents:new' %}" class="btn btn-primary">New</a>
+    </div>
+    <ul> 
+        {% for document in documents %}
+        <div class="mx-auto card" style="width: 40rem;"> 
+            <div class="card-body" >
+                <a href="{{ document.markdown.url }}">
+                    {{ document.markdown }}
+                </a>
+                <form action="{% url 'documents:delete' document.pk %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="Delete">
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
+
