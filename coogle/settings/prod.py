@@ -9,6 +9,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = True # 추후에 False로 변경 예정
 
 ALLOWED_HOSTS = [
+    '13.125.237.67',
     '.compute.amazonaws.com',
 ]
 
